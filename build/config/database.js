@@ -14,18 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const model_role_1 = __importDefault(require("../models/model.role"));
 dotenv_1.default.config();
-// const uri = process.env.URI as string
-// const connectDB = async (): Promise<void> => {
-//   try {
-//     await mongoose.connect(uri);
-//     console.log('Conectado a MongoDB Atlas');
-//   } catch (error) {
-//     console.error('Error de conexión a MongoDB Atlas:', error);
-//     process.exit(1); // Salir del proceso con error
-//   }
-// };
 class Database {
     constructor(uri, options) {
         this.uri = uri;
@@ -37,13 +26,6 @@ class Database {
             try {
                 yield mongoose_1.default.connect(this.uri, this.options);
                 console.log('conectado a mongo atlas');
-                // Crear y guardar un nuevo role
-                const newRole = new model_role_1.default({ id: 1, name: 'Admin' });
-                yield newRole.save();
-                console.log('Nuevo rol creado:', newRole);
-                // Verificar si el rol se guardó en la base de datos
-                const savedRole = yield model_role_1.default.findOne({ id: 1 });
-                console.log('Rol guardado:', savedRole);
                 this.connection.on('connected', () => {
                     console.log('Mongoose connected to DB');
                 });
